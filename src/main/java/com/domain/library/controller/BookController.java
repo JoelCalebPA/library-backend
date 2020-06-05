@@ -3,7 +3,9 @@ package com.domain.library.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,21 +16,26 @@ import com.domain.library.model.Book;
 import com.domain.library.service.BookService;
 
 @RestController
-@CrossOrigin(origins = {"http://www.calebpaytan.site", "http://localhost:3000"})
-@RequestMapping("api/book")
 public class BookController {
 
+	private static final String PUBLIC_URL = "/api/public/";
+	
 	@Autowired
 	private BookService bookService;
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public Book saveUpdateBook(@RequestBody Book book) {
 		return bookService.saveOrUpdateBook(book);
 	}
 	
-	@RequestMapping(path = "/findAll", method = RequestMethod.GET)
-	public List<Book> findAllBooks() {
-		return bookService.getAllBooks();
+	@RequestMapping(path = PUBLIC_URL + "/book/findAll", method = RequestMethod.GET)
+	public ResponseEntity<?> findAll() {
+		List<Book> books = bookService.getAllBooks();
+		if (books.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
 	}
 	
 	@RequestMapping(path = "/findByAuthor/{id}", method = RequestMethod.GET)

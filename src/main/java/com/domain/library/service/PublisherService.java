@@ -18,4 +18,8 @@ public class PublisherService {
 		return (List<Publisher>) publisherRepository.findAll();
 	}
 	
+	public Publisher save(Publisher publisher) {
+		return publisherRepository.save(publisher);
+	}
+	
 }
