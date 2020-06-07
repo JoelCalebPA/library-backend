@@ -20,10 +20,10 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -45,6 +45,19 @@ public class UserService {
 		Role userRole = roleRepository.findByName("USER");
 		user.setRoles(new ArrayList<Role>(Arrays.asList(userRole)));
 		return userRepository.save(user);
+	}
+
+	public User login(User user) {
+		User loggedUser = new User();
+		loggedUser = findUserByUsername(user.getUsername());
+		if (bCryptPasswordEncoder.matches(user.getPassword(), loggedUser.getPassword()))
+			return loggedUser;
+		else
+			return null;
+	}
+
+	public User findById(Long id) {
+		return userRepository.findById(id).get();
 	}
 
 }
