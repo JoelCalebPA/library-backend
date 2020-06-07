@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,8 +15,9 @@ import com.domain.library.model.Author;
 import com.domain.library.service.AuthorService;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AuthorController {
-	
+
 	private static final String PUBLIC_URL = "/api/public/";
 	private static final String PRIVATE_URL = "/api/admin/";
 
@@ -33,8 +35,8 @@ public class AuthorController {
 
 	@RequestMapping(value = PRIVATE_URL + "/author/save", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthor(@RequestBody Author author) {
-		authorService.save(author);
-		return new ResponseEntity<Author>(author, HttpStatus.CREATED);
+		Author savedAuthor = authorService.save(author);
+		return new ResponseEntity<Author>(savedAuthor, HttpStatus.CREATED);
 	}
 
 }

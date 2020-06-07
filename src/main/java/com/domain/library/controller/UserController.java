@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import com.domain.library.model.User;
 import com.domain.library.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	private static final String PUBLIC_URL = "/api/public/";
@@ -32,9 +34,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = PUBLIC_URL + "/user/save", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthor(@RequestBody User user) {
+	public ResponseEntity<?> createUser(@RequestBody User user) {
 		userService.saveUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value = PUBLIC_URL + "/user/login", method = RequestMethod.POST)
+	public ResponseEntity<?> login(@RequestBody User user) {
+		User loggedUser = userService.login(user);
+		if (loggedUser == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<User>(loggedUser, HttpStatus.OK);
 	}
 
 }

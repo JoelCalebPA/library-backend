@@ -5,16 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.domain.library.model.Category;
 import com.domain.library.model.Suscription;
 import com.domain.library.service.SuscriptionService;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class SuscriptionController {
 
 	private static final String PUBLIC_URL = "/api/public/";

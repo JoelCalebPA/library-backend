@@ -21,14 +21,14 @@ public class Author implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private long id;
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String description;
 	private List<Book> books;
 
 	public Author() {
 		super();
 	}
+
 	@Id
 	@Column(name = "AUTHOR_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,12 +36,8 @@ public class Author implements Serializable {
 		return id;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
+	public String getName() {
+		return name;
 	}
 
 	public String getDescription() {
@@ -58,12 +54,8 @@ public class Author implements Serializable {
 		this.id = id;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setDescription(String description) {
