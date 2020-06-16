@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,10 +38,13 @@ public class UserService {
 	}
 
 	public User saveUser(User user) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(true);
 		Role userRole = roleRepository.findByName("USER");
 		user.setRoles(new ArrayList<Role>(Arrays.asList(userRole)));
+		return userRepository.save(user);
+	}
+	
+	public User updateUser(User user) {
 		return userRepository.save(user);
 	}
 
@@ -58,6 +59,20 @@ public class UserService {
 
 	public User findById(Long id) {
 		return userRepository.findById(id).get();
+	}
+	
+	public User susbscribe(User user) {
+		User subUser = findUserByEmail(user.getEmail());
+		Role subRole = roleRepository.findByName("SUBSCRIBER");
+		subUser.susbcribe(subRole);
+		return updateUser(subUser);
+	}
+	
+	public User unSusbscribe(User user) {
+		User subUser = findUserByEmail(user.getEmail());
+		Role subRole = roleRepository.findByName("SUBSCRIBER");
+		subUser.unsubscribe(subRole);
+		return updateUser(subUser);
 	}
 
 }

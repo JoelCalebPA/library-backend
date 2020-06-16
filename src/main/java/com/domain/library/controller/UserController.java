@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.domain.library.model.ApiBadResponse;
+import com.domain.library.model.LoginRequest;
+import com.domain.library.model.UpdateUserRequest;
 import com.domain.library.model.User;
 import com.domain.library.service.UserService;
 
@@ -19,12 +22,12 @@ import com.domain.library.service.UserService;
 public class UserController {
 
 	private static final String PUBLIC_URL = "/api/public/";
-	private static final String PRIVATE_URL = "/api/admin/";
+	private static final String PRIVATE_URL = "/api/user/";
 
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = PRIVATE_URL + "/user/findAll", method = RequestMethod.GET)
+	@RequestMapping(value = PRIVATE_URL + "/findAll", method = RequestMethod.POST)
 	public ResponseEntity<?> findAll() {
 		List<User> users = userService.findAll();
 		if (users.isEmpty()) {
@@ -33,19 +36,40 @@ public class UserController {
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = PUBLIC_URL + "/user/save", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@RequestBody User user) {
-		userService.saveUser(user);
-		return new ResponseEntity<User>(user, HttpStatus.CREATED);
+	@RequestMapping(value = PRIVATE_URL + "/subscribe", method = RequestMethod.POST)
+	public ResponseEntity<?> subscribe(@RequestBody User user) {
+		User subUser = userService.susbscribe(user);
+		return new ResponseEntity<User>(subUser, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = PUBLIC_URL + "/user/login", method = RequestMethod.POST)
-	public ResponseEntity<?> login(@RequestBody User user) {
-		User loggedUser = userService.login(user);
-		if (loggedUser == null) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+	@RequestMapping(value = PRIVATE_URL + "/unsubscribe", method = RequestMethod.POST)
+	public ResponseEntity<?> unbsuscribe(@RequestBody User user) {
+		User unsubUser = userService.unSusbscribe(user);
+		return new ResponseEntity<User>(unsubUser, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = PRIVATE_URL + "/update", method = RequestMethod.POST)
+	public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest userUpdate) {
+		User user = userService.findById(userUpdate.getId());
+
+		if (!user.getEmail().equals(userUpdate.getEmail())) {
+			if (userService.findUserByEmail(userUpdate.getEmail()) != null) {
+				return new ResponseEntity<ApiBadResponse>(new ApiBadResponse("Email is already taken!"),
+						HttpStatus.BAD_REQUEST);
+			}
 		}
-		return new ResponseEntity<User>(loggedUser, HttpStatus.OK);
+
+		user.setEmail(userUpdate.getEmail());
+		user.getClient().setAddress(userUpdate.getAddress());
+
+		User updatedUser = userService.updateUser(user);
+		return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = PRIVATE_URL + "/find", method = RequestMethod.POST)
+	public ResponseEntity<?> updateUser(@RequestBody LoginRequest request) {
+		User updatedUser = userService.findUserByEmail(request.getEmail());
+		return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
 	}
 
 }

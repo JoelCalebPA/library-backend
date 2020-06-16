@@ -36,6 +36,7 @@ public class Category implements Serializable {
 		return id;
 	}
 
+	@Column(unique=true)
 	public String getName() {
 		return name;
 	}

@@ -16,7 +16,7 @@ import com.domain.library.service.SuscriptionService;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class SuscriptionController {
+public class SubscriptionController {
 
 	private static final String PUBLIC_URL = "/api/public/";
 	private static final String PRIVATE_URL = "/api/user/";
@@ -24,7 +24,7 @@ public class SuscriptionController {
 	@Autowired
 	private SuscriptionService suscriptionService;
 	
-	@RequestMapping(value = PUBLIC_URL + "/suscription/findAll", method = RequestMethod.GET)
+	@RequestMapping(value = PUBLIC_URL + "/subscription/findAll", method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
 		List<Suscription> suscriptions = suscriptionService.findAll();
 		if (suscriptions.isEmpty()) {
@@ -33,7 +33,7 @@ public class SuscriptionController {
 		return new ResponseEntity<List<Suscription>>(suscriptions, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = PRIVATE_URL + "/suscription/save", method = RequestMethod.POST)
+	@RequestMapping(value = PRIVATE_URL + "/subscription/save", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthor(@RequestBody Suscription suscription) {
 		suscriptionService.save(suscription);
 		return new ResponseEntity<Suscription>(suscription, HttpStatus.CREATED);

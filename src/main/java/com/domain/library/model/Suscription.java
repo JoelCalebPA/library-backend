@@ -19,7 +19,7 @@ public class Suscription implements Serializable {
 	@Column(name = "SUSCRIPTION_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	
 	public Suscription() {
 	}
 

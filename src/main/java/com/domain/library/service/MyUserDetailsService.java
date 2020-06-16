@@ -20,7 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findUserByUsername(username);
+		User user = userService.findUserByEmail(username);
 		return UserPrincipal.create(user);
 	}
 

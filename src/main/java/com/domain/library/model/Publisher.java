@@ -36,6 +36,7 @@ public class Publisher implements Serializable {
 		return id;
 	}
 
+	@Column(unique=true)
 	public String getName() {
 		return name;
 	}

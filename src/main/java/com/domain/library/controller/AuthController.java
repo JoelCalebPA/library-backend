@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.domain.library.model.ApiBadResponse;
+import com.domain.library.model.Client;
 import com.domain.library.model.JwtAuthenticationResponse;
 import com.domain.library.model.LoginRequest;
 import com.domain.library.model.SignUpRequest;
@@ -40,23 +42,25 @@ public class AuthController {
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = tokenProvider.generateToken(authentication);
 		return ResponseEntity
-				.ok(new JwtAuthenticationResponse(jwt, userService.findUserByUsername(authentication.getName())));
+				.ok(new JwtAuthenticationResponse(jwt, userService.findUserByEmail(loginRequest.getEmail())));
 	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
-		if (userService.findUserByUsername(signUpRequest.getUsername()) != null) {
-			return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+		if (userService.findUserByEmail(signUpRequest.getEmail()) != null) {
+			return new ResponseEntity<ApiBadResponse>(new ApiBadResponse("Email is already taken!"), HttpStatus.BAD_REQUEST);
 		}
 
 		// Creating user's account
-		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getPassword());
+		User user = new User(signUpRequest.getEmail(), signUpRequest.getPassword());
+		Client client = new Client(signUpRequest.getName());
+		user.setClient(client);
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 

@@ -37,6 +37,7 @@ public class Book implements Serializable {
 		return id;
 	}
 
+	@Column(unique = true)
 	public String getTitle() {
 		return title;
 	}
