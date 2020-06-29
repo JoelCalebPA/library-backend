@@ -1,7 +1,9 @@
 package com.domain.library.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "BOOK")
@@ -25,6 +30,9 @@ public class Book implements Serializable {
 	private Publisher publisher;
 	private String publicationDate;
 	private String isbn;
+	private int stock;
+	private double price;
+	private List<Rating> ratings;
 	private boolean active = true;
 
 	public Book() {
@@ -111,6 +119,32 @@ public class Book implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
 
 }
