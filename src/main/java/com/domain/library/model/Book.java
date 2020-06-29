@@ -19,6 +19,7 @@ public class Book implements Serializable {
 
 	private long id;
 	private String title;
+	private String description;
 	private Author author;
 	private Category category;
 	private Publisher publisher;
@@ -102,6 +103,14 @@ public class Book implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

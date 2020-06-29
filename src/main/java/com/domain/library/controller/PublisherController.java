@@ -35,8 +35,8 @@ public class PublisherController {
 
 	@RequestMapping(value = PRIVATE_URL + "/publisher/save", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthor(@RequestBody Publisher publisher) {
-		publisherService.save(publisher);
-		return new ResponseEntity<Publisher>(publisher, HttpStatus.CREATED);
+		Publisher savedPublisher = publisherService.save(publisher);
+		return new ResponseEntity<Publisher>(savedPublisher, HttpStatus.CREATED);
 	}
 
 }

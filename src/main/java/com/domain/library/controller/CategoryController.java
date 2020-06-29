@@ -35,8 +35,8 @@ public class CategoryController {
 
 	@RequestMapping(value = PRIVATE_URL + "/category/save", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthor(@RequestBody Category category) {
-		categoryService.save(category);
-		return new ResponseEntity<Category>(category, HttpStatus.CREATED);
+		Category savedCategory = categoryService.save(category);
+		return new ResponseEntity<Category>(savedCategory, HttpStatus.CREATED);
 	}
 	
 }

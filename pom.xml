@@ -119,7 +119,7 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-war-plugin</artifactId>
 						<configuration>
-							<outputDirectory>/opt/tomcat/webapps</outputDirectory>
+							<outputDirectory>/home/caleb/tomcat/webapps</outputDirectory>
 						</configuration>
 					</plugin>
 				</plugins>
