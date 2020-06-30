@@ -13,20 +13,21 @@ public class BookService {
 
 	@Autowired
 	private BookRepository bookRepository;
-	
+
 	public Book saveOrUpdateBook(Book book) {
 		return bookRepository.save(book);
 	}
-	
-	public List<Book> getBookByAuthor(long id) {
+
+	public List<Book> getBooksByAuthor(long id) {
 		return (List<Book>) bookRepository.findByAuthorId(id);
 	}
-	
+
 	public List<Book> getAllBooks() {
 		return (List<Book>) bookRepository.findAll();
 	}
-	
-	
-	
-	
+
+	public Book getBookById(long id) {
+		return bookRepository.findById(id).get();
+	}
+
 }

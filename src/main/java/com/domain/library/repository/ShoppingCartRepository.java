@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.domain.library.model.ShoppingCart;
 
 @Repository
-public interface CartRepository extends JpaRepository<ShoppingCart, Long> {
+public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
 
 	ShoppingCart findByClientId(long id);
 

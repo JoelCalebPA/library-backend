@@ -1,4 +1,4 @@
-package com.domain.library.model;
+package com.domain.library.model.api;
 
 public class LoginRequest {
 

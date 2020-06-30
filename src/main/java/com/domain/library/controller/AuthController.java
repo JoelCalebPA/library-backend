@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.domain.library.model.ApiBadResponse;
 import com.domain.library.model.Client;
-import com.domain.library.model.JwtAuthenticationResponse;
-import com.domain.library.model.LoginRequest;
-import com.domain.library.model.SignUpRequest;
 import com.domain.library.model.User;
+import com.domain.library.model.api.ApiBadResponse;
+import com.domain.library.model.api.JwtAuthenticationResponse;
+import com.domain.library.model.api.LoginRequest;
+import com.domain.library.model.api.SignUpRequest;
 import com.domain.library.security.JwtTokenProvider;
 import com.domain.library.service.UserService;
 

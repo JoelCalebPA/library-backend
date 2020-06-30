@@ -45,7 +45,6 @@ public class CartItem implements Serializable {
 		return cart;
 	}
 
-	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "BOOK_ID")
 	public Book getBook() {

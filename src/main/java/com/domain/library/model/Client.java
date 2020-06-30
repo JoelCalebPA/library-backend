@@ -21,23 +21,38 @@ public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name = "CLIENT_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
 	private String address;
+
+	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
 	private ShoppingCart cart;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Rating> ratings;
+
+	@OneToMany(mappedBy = "client")
 	private List<Order> orderList;
 
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	private List<ClientPayment> clientPaymentList;
+
 	public Client() {
+	}
+
+	public Client(long id) {
+		super();
+		this.id = id;
 	}
 
 	public Client(String name) {
 		this.name = name;
 	}
 
-	@Id
-	@Column(name = "CLIENT_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
@@ -62,8 +77,6 @@ public class Client implements Serializable {
 		this.address = address;
 	}
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	public List<Rating> getRatings() {
 		return ratings;
 	}
@@ -72,7 +85,6 @@ public class Client implements Serializable {
 		this.ratings = ratings;
 	}
 
-	@OneToOne(mappedBy = "client")
 	public ShoppingCart getCart() {
 		return cart;
 	}
@@ -81,13 +93,25 @@ public class Client implements Serializable {
 		this.cart = cart;
 	}
 
-	@OneToMany(mappedBy = "client")
 	public List<Order> getOrderList() {
 		return orderList;
 	}
 
 	public void setOrderList(List<Order> orderList) {
 		this.orderList = orderList;
+	}
+
+	public List<ClientPayment> getClientPaymentList() {
+		return clientPaymentList;
+	}
+
+	public void setClientPaymentList(List<ClientPayment> clientPaymentList) {
+		this.clientPaymentList = clientPaymentList;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", name=" + name + "]";
 	}
 
 }

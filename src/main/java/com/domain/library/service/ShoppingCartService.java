@@ -4,21 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.domain.library.model.ShoppingCart;
-import com.domain.library.repository.CartRepository;
+import com.domain.library.repository.ShoppingCartRepository;
 
 @Service
-public class CartService {
+public class ShoppingCartService {
 
 	@Autowired
-	private CartRepository cartRepository;
+	private ShoppingCartRepository cartRepository;
 	
-	ShoppingCart findByClientId(long id) {
+	public ShoppingCart findByClientId(long id) {
 		return cartRepository.findByClientId(id);
 	}
 	
-	ShoppingCart save(ShoppingCart cart) {
+	public ShoppingCart save(ShoppingCart cart) {
 		return cartRepository.save(cart);
 	}
-	
 	
 }

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "RATING")
 public class Rating implements Serializable {
@@ -34,6 +36,7 @@ public class Rating implements Serializable {
 		return id;
 	}
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "BOOK_ID")
 	public Book getBook() {
@@ -72,6 +75,12 @@ public class Rating implements Serializable {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return "Rating [id=" + id + ", book=" + book + ", client=" + client + ", comment=" + comment + ", date=" + date
+				+ "]";
 	}
 
 }

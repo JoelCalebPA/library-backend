@@ -1,4 +1,6 @@
-package com.domain.library.model;
+package com.domain.library.model.api;
+
+import com.domain.library.model.User;
 
 public class JwtAuthenticationResponse {
 

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.domain.library.model.ApiBadResponse;
-import com.domain.library.model.LoginRequest;
-import com.domain.library.model.UpdateUserRequest;
 import com.domain.library.model.User;
+import com.domain.library.model.api.ApiBadResponse;
+import com.domain.library.model.api.LoginRequest;
+import com.domain.library.model.api.UpdateUserRequest;
 import com.domain.library.service.UserService;
 
 @RestController

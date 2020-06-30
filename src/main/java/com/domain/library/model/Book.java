@@ -39,6 +39,11 @@ public class Book implements Serializable {
 		super();
 	}
 
+	public Book(long id) {
+		super();
+		this.id = id;
+	}
+
 	@Id
 	@Column(name = "BOOK_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
