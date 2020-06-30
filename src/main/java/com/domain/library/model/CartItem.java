@@ -1,7 +1,6 @@
 package com.domain.library.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,10 +23,10 @@ public class CartItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private long id;
-	private ShoppingCart cart;
+	private ShoppingCart shoppingCart;
 	private Book book;
 	private int quantity;
-	private BigDecimal subtotal;
+	private double subtotal;
 	private List<BookToCartItem> bookToCartItemList;
 	private Order order;
 
@@ -41,8 +40,8 @@ public class CartItem implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "CART_ID")
-	public ShoppingCart getCart() {
-		return cart;
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
 	}
 
 	@OneToOne
@@ -55,7 +54,7 @@ public class CartItem implements Serializable {
 		return quantity;
 	}
 
-	public BigDecimal getSubtotal() {
+	public double getSubtotal() {
 		return subtotal;
 	}
 
@@ -84,8 +83,8 @@ public class CartItem implements Serializable {
 		this.id = id;
 	}
 
-	public void setCart(ShoppingCart cart) {
-		this.cart = cart;
+	public void setShoppingCart(ShoppingCart cart) {
+		this.shoppingCart = cart;
 	}
 
 	public void setBook(Book book) {
@@ -96,7 +95,7 @@ public class CartItem implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public void setSubtotal(BigDecimal subtotal) {
+	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
 	}
 

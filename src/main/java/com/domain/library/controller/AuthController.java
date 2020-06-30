@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.domain.library.model.Client;
+import com.domain.library.model.ShoppingCart;
 import com.domain.library.model.User;
 import com.domain.library.model.api.ApiBadResponse;
 import com.domain.library.model.api.JwtAuthenticationResponse;
@@ -60,6 +61,9 @@ public class AuthController {
 		// Creating user's account
 		User user = new User(signUpRequest.getEmail(), signUpRequest.getPassword());
 		Client client = new Client(signUpRequest.getName());
+		ShoppingCart shoppingCart = new ShoppingCart();
+		shoppingCart.setClient(client);
+		client.setShoppingCart(shoppingCart);
 		user.setClient(client);
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));

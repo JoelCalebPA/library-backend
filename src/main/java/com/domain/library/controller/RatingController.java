@@ -1,5 +1,7 @@
 package com.domain.library.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,8 @@ public class RatingController {
 		rating.setBook(book);
 		rating.setClient(client);
 		rating.setComment(ratingRequest.getComment());
-		rating.setDate(ratingRequest.getDate());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		rating.setDate(sdf.format(new Date()));
 		Rating savedRating = ratingService.save(rating);
 		return new ResponseEntity<Rating>(savedRating, HttpStatus.CREATED);
 	}

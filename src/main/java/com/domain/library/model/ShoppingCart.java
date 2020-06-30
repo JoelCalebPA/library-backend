@@ -45,7 +45,7 @@ public class ShoppingCart implements Serializable {
 		return client;
 	}
 
-	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	public List<CartItem> getCartItems() {
 		return cartItems;
 	}

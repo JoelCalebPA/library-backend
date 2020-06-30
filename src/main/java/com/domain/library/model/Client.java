@@ -85,11 +85,11 @@ public class Client implements Serializable {
 		this.ratings = ratings;
 	}
 
-	public ShoppingCart getCart() {
+	public ShoppingCart getShoppingCart() {
 		return cart;
 	}
 
-	public void setCart(ShoppingCart cart) {
+	public void setShoppingCart(ShoppingCart cart) {
 		this.cart = cart;
 	}
 
