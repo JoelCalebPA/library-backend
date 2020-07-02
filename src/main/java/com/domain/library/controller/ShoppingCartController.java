@@ -1,13 +1,10 @@
 package com.domain.library.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +23,6 @@ import com.domain.library.service.ShoppingCartService;
 import com.domain.library.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "*")
 public class ShoppingCartController {
 
 	private static final String PRIVATE_URL = "/api/user/";
@@ -81,14 +77,13 @@ public class ShoppingCartController {
 		User user = userService.findById(tokenProvider.getUserIdFromJWT(request.getToken()));
 		ShoppingCart shoppingCart = shoppingCartService.findByClientId(user.getClient().getId());
 
-		shoppingCartService.updateShoppingCart(shoppingCart);
-
 		return new ResponseEntity<ShoppingCart>(shoppingCart, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = PRIVATE_URL + "/cart/removeItem/{id}", method = RequestMethod.POST)
-	public ResponseEntity<?> removeItem(@PathVariable("id") Long id) {
-		CartItem cartItem = cartItemService.findById(id);
+	@RequestMapping(value = PRIVATE_URL + "/cart/removeItem", method = RequestMethod.POST)
+	public ResponseEntity<?> removeItem(@RequestBody AddCartItemRequest addCartItemRequest) {
+		long cartItemId = addCartItemRequest.getCartItemId();
+		CartItem cartItem = cartItemService.findById(cartItemId);
 		cartItemService.removeCartItem(cartItem);
 		ShoppingCart shop = shoppingCartService.updateShoppingCart(cartItem.getShoppingCart());
 		return new ResponseEntity<ShoppingCart>(shop, HttpStatus.OK);

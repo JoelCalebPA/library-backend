@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,6 @@ import com.domain.library.model.Book;
 import com.domain.library.service.BookService;
 
 @RestController
-@CrossOrigin(origins = "*")
 public class BookController {
 
 	private static final String PUBLIC_URL = "/api/public/";
@@ -24,7 +22,7 @@ public class BookController {
 
 	@Autowired
 	private BookService bookService;
-
+	
 	@RequestMapping(value = PRIVATE_URL + "/book/save", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthor(@RequestBody Book book) {
 		Book savedBook = bookService.saveOrUpdateBook(book);
