@@ -35,13 +35,13 @@ public class UserController {
 
 	@RequestMapping(value = PRIVATE_URL + "/subscribe", method = RequestMethod.POST)
 	public ResponseEntity<?> subscribe(@RequestBody User user) {
-		User subUser = userService.susbscribe(user);
+		User subUser = userService.subscribe(user);
 		return new ResponseEntity<User>(subUser, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = PRIVATE_URL + "/unsubscribe", method = RequestMethod.POST)
 	public ResponseEntity<?> unbsuscribe(@RequestBody User user) {
-		User unsubUser = userService.unSusbscribe(user);
+		User unsubUser = userService.unsubscribe(user);
 		return new ResponseEntity<User>(unsubUser, HttpStatus.OK);
 	}
 

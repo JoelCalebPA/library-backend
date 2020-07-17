@@ -28,16 +28,23 @@ public class Client implements Serializable {
 	private String name;
 	private String address;
 
+	@JsonIgnore
 	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
 	private ShoppingCart cart;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	private List<Subscription> subscriptions;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Rating> ratings;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orderList;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<ClientPayment> clientPaymentList;
 
@@ -107,6 +114,22 @@ public class Client implements Serializable {
 
 	public void setClientPaymentList(List<ClientPayment> clientPaymentList) {
 		this.clientPaymentList = clientPaymentList;
+	}
+	
+	public ShoppingCart getCart() {
+		return cart;
+	}
+
+	public List<Subscription> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setCart(ShoppingCart cart) {
+		this.cart = cart;
+	}
+
+	public void setSubscriptions(List<Subscription> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 
 	@Override

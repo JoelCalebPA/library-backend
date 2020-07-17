@@ -10,6 +10,6 @@ import com.domain.library.model.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-	List<Order> findByClientId(long id);
+	List<Order> findByClientIdOrderByIdDesc(long id);
 
 }

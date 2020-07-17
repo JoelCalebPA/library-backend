@@ -10,25 +10,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.domain.library.model.Discount;
 import com.domain.library.model.Subscription;
+import com.domain.library.model.User;
+import com.domain.library.service.DiscountService;
 import com.domain.library.service.SubscriptionService;
 
 @RestController
-public class SubscriptionController {
+public class DiscountController {
 
 	private static final String PUBLIC_URL = "/api/public/";
 	private static final String PRIVATE_URL = "/api/admin/";
 	
 	@Autowired
-	private SubscriptionService suscriptionService;
+	private DiscountService discountService;
 	
-	@RequestMapping(value = PRIVATE_URL + "/subscription/findAll", method = RequestMethod.GET)
+	@RequestMapping(value = PRIVATE_URL + "/discount/findAll", method = RequestMethod.GET)
 	public ResponseEntity<?> findAll() {
-		List<Subscription> suscriptions = suscriptionService.findAll();
-		if (suscriptions.isEmpty()) {
+		List<Discount> discounts = discountService.findAll();
+		if (discounts.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Subscription>>(suscriptions, HttpStatus.OK);
+		return new ResponseEntity<List<Discount>>(discounts, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = PRIVATE_URL + "/discount/save", method = RequestMethod.POST)
+	public ResponseEntity<?> save(@RequestBody Discount disc) {
+		Discount discount = discountService.saveUpdate(disc);
+		return new ResponseEntity<Discount>(discount, HttpStatus.OK);
 	}
 	
 }

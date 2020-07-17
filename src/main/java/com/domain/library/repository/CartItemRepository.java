@@ -10,7 +10,7 @@ import com.domain.library.model.ShoppingCart;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
-	
+
 	List<CartItem> findByShoppingCart(ShoppingCart shoppingCart);
 
 //	List<CartItem> findByOrder(Order order);

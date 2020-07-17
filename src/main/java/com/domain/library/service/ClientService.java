@@ -34,7 +34,7 @@ public class ClientService {
 	}
 
 	public List<Order> findAllOrders(long id) {
-		return orderRepository.findByClientId(id);
+		return orderRepository.findByClientIdOrderByIdDesc(id);
 	}
 
 	public Order saveOrder(Order order) {

@@ -1,7 +1,9 @@
 package com.domain.library.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.domain.library.model.Role;
+import com.domain.library.model.Subscription;
 import com.domain.library.model.User;
 import com.domain.library.repository.RoleRepository;
+import com.domain.library.repository.SubscriptionRepository;
 import com.domain.library.repository.UserRepository;
 
 @Service("userService")
@@ -21,6 +25,9 @@ public class UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private SubscriptionRepository subscriptionRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,7 +50,7 @@ public class UserService {
 		user.setRoles(new ArrayList<Role>(Arrays.asList(userRole)));
 		return userRepository.save(user);
 	}
-	
+
 	public User updateUser(User user) {
 		return userRepository.save(user);
 	}
@@ -60,18 +67,36 @@ public class UserService {
 	public User findById(Long id) {
 		return userRepository.findById(id).get();
 	}
-	
-	public User susbscribe(User user) {
+
+	public User subscribe(User user) {
 		User subUser = findUserByEmail(user.getEmail());
 		Role subRole = roleRepository.findByName("SUBSCRIBER");
 		subUser.susbcribe(subRole);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		Subscription sub = new Subscription();
+		sub.setClient(subUser.getClient());
+		sub.setStartingDate(sdf.format(new Date()));
+		sub.setEndingDate("");
+		sub.setStatus("active");
+		subscriptionRepository.save(sub);
+
 		return updateUser(subUser);
 	}
-	
-	public User unSusbscribe(User user) {
+
+	public User unsubscribe(User user) {
 		User subUser = findUserByEmail(user.getEmail());
 		Role subRole = roleRepository.findByName("SUBSCRIBER");
 		subUser.unsubscribe(subRole);
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		Subscription sub = subscriptionRepository.findByClientIdAndStatus(subUser.getClient().getId(), "active");
+		sub.setEndingDate(sdf.format(new Date()));
+		sub.setStatus("inactive");
+		subscriptionRepository.save(sub);
+
 		return updateUser(subUser);
 	}
 
